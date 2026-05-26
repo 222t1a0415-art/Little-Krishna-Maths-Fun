@@ -353,6 +353,17 @@ opacity:1;
 }
 }
 
+#downloadBtn{
+background:#ff5722;
+color:white;
+margin-top:15px;
+width:100%;
+}
+
+#downloadBtn:hover{
+background:#ff7043;
+}
+
 </style>
 </head>
 
@@ -411,6 +422,9 @@ Choose a game mode!
 </div>
 
 <button id="toggleTheme" onclick="toggleTheme()">🌙 Dark / Light Mode</button>
+<button id="downloadBtn" onclick="downloadApp()">
+⬇ Download App
+</button>
 
 </div>
 
@@ -672,6 +686,27 @@ celebration.remove();
 },4000);
 
 }
+
+function downloadApp(){
+
+let htmlContent =
+document.documentElement.outerHTML;
+
+let blob = new Blob(
+[htmlContent],
+{type:"text/html"}
+);
+
+let link = document.createElement("a");
+
+link.href = URL.createObjectURL(blob);
+
+link.download = "Little-Krishna-Maths-Fun.html";
+
+link.click();
+
+}
+
 </script>
 
 </body>
