@@ -1,0 +1,713 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Little Krishna Maths Fun</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Comic Sans MS', cursive;
+}
+
+body{
+background:linear-gradient(135deg,#ffe066,#ffb3ff,#80dfff);
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+transition:0.4s;
+}
+
+.dark{
+background:linear-gradient(135deg,#1e1e2f,#2b2b45,#111);
+color:white;
+}
+
+.container{
+width:100%;
+max-width:700px;
+background:white;
+padding:25px;
+border-radius:25px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+text-align:center;
+}
+
+.dark .container{
+background:#222;
+color:white;
+}
+
+h1{
+font-size:38px;
+color:#ff6600;
+margin-bottom:10px;
+}
+
+.krishna{
+width:120px;
+margin-bottom:15px;
+border-radius:20px;
+}
+
+.mode-buttons{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+margin-top:20px;
+}
+
+button{
+padding:15px;
+border:none;
+border-radius:15px;
+font-size:18px;
+cursor:pointer;
+font-weight:bold;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+.mode{
+background:#ffeb3b;
+}
+
+.level{
+background:#00e676;
+}
+
+#submitBtn{
+background:#ff4081;
+color:white;
+margin-top:15px;
+}
+
+#nextBtn{
+background:#00b0ff;
+color:white;
+margin-top:15px;
+display:none;
+}
+
+#toggleTheme{
+background:#673ab7;
+color:white;
+margin-top:15px;
+}
+
+.question-box{
+margin-top:25px;
+font-size:34px;
+font-weight:bold;
+color:#ff1744;
+}
+
+input{
+margin-top:15px;
+padding:12px;
+font-size:24px;
+width:150px;
+text-align:center;
+border-radius:12px;
+border:3px solid #ff9800;
+}
+
+.info{
+display:flex;
+justify-content:space-around;
+margin-top:20px;
+font-size:22px;
+font-weight:bold;
+}
+
+.result{
+margin-top:15px;
+font-size:28px;
+font-weight:bold;
+}
+
+.stars{
+font-size:32px;
+margin-top:10px;
+}
+
+.progress-container{
+width:100%;
+background:#ddd;
+height:22px;
+border-radius:20px;
+margin-top:20px;
+overflow:hidden;
+}
+
+.progress-bar{
+height:100%;
+width:0%;
+background:#4caf50;
+transition:0.4s;
+}
+
+.level-select{
+margin-top:15px;
+display:flex;
+gap:10px;
+justify-content:center;
+flex-wrap:wrap;
+}
+
+@media(max-width:600px){
+
+.mode-buttons{
+grid-template-columns:1fr;
+}
+
+.question-box{
+font-size:28px;
+}
+
+}
+
+@keyframes bounce {
+0%,100%{
+transform:translateY(0);
+}
+50%{
+transform:translateY(-10px);
+}
+}
+
+@keyframes wiggle {
+0%{
+transform:rotate(0deg);
+}
+25%{
+transform:rotate(3deg);
+}
+50%{
+transform:rotate(-3deg);
+}
+75%{
+transform:rotate(3deg);
+}
+100%{
+transform:rotate(0deg);
+}
+}
+
+@keyframes pop {
+0%{
+transform:scale(0.5);
+opacity:0;
+}
+100%{
+transform:scale(1);
+opacity:1;
+}
+}
+
+@keyframes rainbow {
+0%{color:#ff0000;}
+20%{color:#ff9800;}
+40%{color:#4caf50;}
+60%{color:#00bcd4;}
+80%{color:#673ab7;}
+100%{color:#ff4081;}
+}
+
+.container{
+animation:pop 1s ease;
+}
+
+.krishna{
+animation:bounce 2s infinite;
+}
+
+h1{
+animation:rainbow 5s infinite;
+}
+
+button:hover{
+animation:wiggle 0.4s;
+}
+
+.question-box{
+animation:bounce 1.5s infinite;
+}
+
+.stars{
+animation:pop 0.5s ease;
+font-size:38px;
+}
+
+.correct-animation{
+animation:bounce 0.5s;
+}
+
+.wrong-animation{
+animation:wiggle 0.5s;
+background:#ffebee;
+border-radius:15px;
+padding:10px;
+}
+
+.floating-emoji{
+position:fixed;
+font-size:40px;
+animation:floatUp 2s linear forwards;
+pointer-events:none;
+z-index:9999;
+}
+
+@keyframes floatUp{
+0%{
+transform:translateY(0) scale(1);
+opacity:1;
+}
+100%{
+transform:translateY(-200px) scale(1.8);
+opacity:0;
+}
+}
+
+.krishna-celebration{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(255,255,255,0.95);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:99999;
+animation:fadeIn 0.5s;
+}
+
+.krishna-celebration img{
+width:220px;
+animation:fluteDance 2s infinite;
+border-radius:25px;
+}
+
+.krishna-text{
+font-size:40px;
+font-weight:bold;
+margin-top:20px;
+color:#ff4081;
+animation:bounce 1s infinite;
+text-align:center;
+}
+
+.balloon{
+position:absolute;
+bottom:-100px;
+font-size:50px;
+animation:balloonFly 5s linear forwards;
+}
+
+@keyframes balloonFly{
+0%{
+transform:translateY(0);
+opacity:1;
+}
+100%{
+transform:translateY(-120vh);
+opacity:0;
+}
+}
+
+@keyframes fluteDance{
+0%{
+transform:translateX(0) rotate(0deg);
+}
+25%{
+transform:translateX(-10px) rotate(-5deg);
+}
+50%{
+transform:translateX(10px) rotate(5deg);
+}
+75%{
+transform:translateX(-10px) rotate(-5deg);
+}
+100%{
+transform:translateX(0) rotate(0deg);
+}
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+}
+to{
+opacity:1;
+}
+}
+
+#downloadBtn{
+background:#ff5722;
+color:white;
+margin-top:15px;
+width:100%;
+}
+
+#downloadBtn:hover{
+background:#ff7043;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🦚 Little Krishna Maths Fun 🦚</h1>
+
+<img class="krishna" src="images/krishna2.webp">
+
+<div class="mode-buttons">
+
+<button class="mode" onclick="setMode('add')">➕ Addition</button>
+
+<button class="mode" onclick="setMode('sub')">➖ Subtraction</button>
+
+<button class="mode" onclick="setMode('mul')">✖ Multiplication</button>
+
+<button class="mode" onclick="setMode('div')">➗ Division</button>
+
+<button class="mode" onclick="setMode('missing')">❓ Missing Number</button>
+
+<button class="mode" onclick="setMode('beforeafter')">🔢 Before / After</button>
+
+</div>
+
+<div class="level-select">
+<button class="level" onclick="setLevel('easy')">Easy</button>
+<button class="level" onclick="setLevel('medium')">Medium</button>
+<button class="level" onclick="setLevel('hard')">Hard</button>
+</div>
+
+<div class="question-box" id="question">
+Choose a game mode!
+</div>
+
+<input type="number" id="answer" placeholder="Answer">
+
+<br>
+
+<button id="submitBtn" onclick="checkAnswer()">Submit</button>
+
+<button id="nextBtn" onclick="generateQuestion()">Next Question</button>
+
+<div class="result" id="result"></div>
+
+<div class="stars" id="stars"></div>
+
+<div class="info">
+<div>⭐ Score: <span id="score">0</span></div>
+</div>
+
+<div class="progress-container">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+<button id="toggleTheme" onclick="toggleTheme()">🌙 Dark / Light Mode</button>
+<button id="downloadBtn" onclick="downloadApp()">
+⬇ Download App
+</button>
+
+</div>
+
+<script>
+
+let mode = "";
+let level = "easy";
+let num1, num2, answer;
+let score = 0;
+let totalQuestions = 0;
+
+const questionEl = document.getElementById("question");
+const resultEl = document.getElementById("result");
+const scoreEl = document.getElementById("score");
+const starsEl = document.getElementById("stars");
+const progressBar = document.getElementById("progressBar");
+
+function setMode(selectedMode){
+mode = selectedMode;
+generateQuestion();
+}
+
+function setLevel(selectedLevel){
+level = selectedLevel;
+generateQuestion();
+}
+
+function randomNumber(){
+if(level === "easy") return Math.floor(Math.random()*10)+1;
+if(level === "medium") return Math.floor(Math.random()*30)+1;
+return Math.floor(Math.random()*70)+1;
+}
+
+function generateQuestion(){
+
+document.getElementById("answer").value = "";
+resultEl.innerHTML = "";
+document.getElementById("nextBtn").style.display = "none";
+
+num1 = randomNumber();
+num2 = randomNumber();
+
+if(mode === "add"){
+answer = num1 + num2;
+questionEl.innerHTML = `${num1} + ${num2} = ?`;
+}
+
+else if(mode === "sub"){
+if(num2 > num1){
+[num1,num2] = [num2,num1];
+}
+answer = num1 - num2;
+questionEl.innerHTML = `${num1} - ${num2} = ?`;
+}
+
+else if(mode === "mul"){
+answer = num1 * num2;
+questionEl.innerHTML = `${num1} × ${num2} = ?`;
+}
+
+else if(mode === "div"){
+answer = num1;
+let temp = num1 * num2;
+questionEl.innerHTML = `${temp} ÷ ${num2} = ?`;
+}
+
+else if(mode === "missing"){
+answer = num2;
+questionEl.innerHTML = `${num1} + ? = ${num1 + num2}`;
+}
+
+else if(mode === "beforeafter"){
+
+let type = Math.random() > 0.5 ? "before" : "after";
+
+if(type === "before"){
+answer = num1 - 1;
+questionEl.innerHTML = `What comes before ${num1}?`;
+}
+else{
+answer = num1 + 1;
+questionEl.innerHTML = `What comes after ${num1}?`;
+}
+}
+
+}
+
+function checkAnswer(){
+
+let userAnswer = Number(document.getElementById("answer").value);
+
+if(userAnswer === answer){
+
+playSound(700);
+
+resultEl.innerHTML = "🎉 Correct!";
+resultEl.style.color = "green";
+
+resultEl.classList.remove("wrong-animation");
+resultEl.classList.add("correct-animation");
+
+score++;
+if(score % 5 === 0){
+showKrishnaCelebration();
+}
+scoreEl.innerHTML = score;
+
+showStars();
+
+createEmoji("🎈");
+createEmoji("⭐");
+createEmoji("🎉");
+
+}
+else{
+
+playSound(200);
+
+resultEl.innerHTML = `❌ Wrong! Answer is ${answer}`;
+resultEl.style.color = "red";
+
+resultEl.classList.remove("correct-animation");
+resultEl.classList.add("wrong-animation");
+
+createEmoji("😅");
+}
+
+totalQuestions++;
+
+updateProgress();
+
+document.getElementById("nextBtn").style.display = "inline-block";
+}
+
+function showStars(){
+
+if(score % 3 === 0){
+starsEl.innerHTML += "⭐";
+}
+}
+
+function updateProgress(){
+
+let progress = (score / 20) * 100;
+
+if(progress > 100){
+progress = 100;
+}
+
+progressBar.style.width = progress + "%";
+}
+
+function toggleTheme(){
+document.body.classList.toggle("dark");
+}
+
+function playSound(freq){
+
+let audioContext = new(window.AudioContext || window.webkitAudioContext)();
+
+let oscillator = audioContext.createOscillator();
+let gainNode = audioContext.createGain();
+
+oscillator.connect(gainNode);
+gainNode.connect(audioContext.destination);
+
+oscillator.frequency.value = freq;
+oscillator.type = "sine";
+
+oscillator.start();
+
+gainNode.gain.exponentialRampToValueAtTime(
+0.0001,
+audioContext.currentTime + 0.4
+);
+
+oscillator.stop(audioContext.currentTime + 0.4);
+
+}
+
+function createEmoji(emoji){
+
+let el = document.createElement("div");
+
+el.className = "floating-emoji";
+
+el.innerHTML = emoji;
+
+el.style.left = Math.random()*90 + "vw";
+el.style.top = "80vh";
+
+document.body.appendChild(el);
+
+setTimeout(()=>{
+el.remove();
+},2000);
+
+}
+
+function showKrishnaCelebration(){
+
+let krishnaImages = [
+
+"images/little krishna.jpg",
+
+"images/little krishna 1.jpg",
+
+"images/little krishna 2.jpg",
+
+"images/little krishna 3.jpg",
+
+"images/little krishna 4.jpg"
+
+];
+
+let randomImage =
+krishnaImages[Math.floor(Math.random()*krishnaImages.length)];
+
+let celebration = document.createElement("div");
+
+celebration.className = "krishna-celebration";
+
+celebration.innerHTML = `
+
+<img class="happy-krishna" src="${randomImage}">
+
+`;
+
+document.body.appendChild(celebration);
+
+for(let i=0;i<25;i++){
+
+let balloon = document.createElement("div");
+
+balloon.className = "balloon";
+
+let balloons = ["🎈","🎉","⭐","🦚","🌸"];
+
+balloon.innerHTML =
+balloons[Math.floor(Math.random()*balloons.length)];
+
+balloon.style.left = Math.random()*100 + "vw";
+
+balloon.style.animationDuration =
+(3 + Math.random()*3) + "s";
+
+document.body.appendChild(balloon);
+
+setTimeout(()=>{
+balloon.remove();
+},5000);
+
+}
+
+playSound(900);
+
+setTimeout(()=>{
+celebration.remove();
+},4000);
+
+}
+
+function downloadApp(){
+
+let htmlContent =
+document.documentElement.outerHTML;
+
+let blob = new Blob(
+[htmlContent],
+{type:"text/html"}
+);
+
+let link = document.createElement("a");
+
+link.href = URL.createObjectURL(blob);
+
+link.download = "Little-Krishna-Maths-Fun.html";
+
+link.click();
+
+}
+
+</script>
+
+</body>
+</html>
